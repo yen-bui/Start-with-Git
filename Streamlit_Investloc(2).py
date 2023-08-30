@@ -256,10 +256,19 @@ Cas LMNP : 0€
     import locale
     from calendar import month_name
     import numpy as np
+    import requests
+    from io import BytesIO
 
     st.markdown("[Download transactions.npz](https://drive.google.com/uc?id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-)")
 
-    arrays = dict(np.load("https://drive.google.com/uc?id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-"))
+    # Define the URL of the hosted file
+    file_url = "https://drive.google.com/uc?id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-"
+
+    # Download the file using requests
+    response = requests.get(file_url)
+    content = BytesIO(response.content)
+
+    arrays = dict(np.load(content))
     data = {k: [s.decode("utf-8") for s in v.tobytes().split(b"\x00")] if v.dtype == np.uint8 else v for k, v in arrays.items()}
     df_transactions = pd.DataFrame.from_dict(data)
 
