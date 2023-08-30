@@ -257,9 +257,9 @@ Cas LMNP : 0€
     from calendar import month_name
     import numpy as np
 
-    st.markdown("[Download transactions.npz](https://drive.google.com//uc?id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-)")
+    st.markdown("[Download transactions.npz](https://drive.google.com/file/d/1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-)")
 
-    arrays = dict(np.load("transactions.npz"))
+    arrays = dict(np.load("https://drive.google.com/file/d/1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-\transactions.npz"))
     data = {k: [s.decode("utf-8") for s in v.tobytes().split(b"\x00")] if v.dtype == np.uint8 else v for k, v in arrays.items()}
     df_transactions = pd.DataFrame.from_dict(data)
 
