@@ -259,7 +259,7 @@ Cas LMNP : 0€
 
     st.markdown("[Download transactions.npz](https://drive.google.com/uc?id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-)")
 
-    arrays = dict(np.load("https://drive.google.com/uc?id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-\transactions.npz"))
+    arrays = dict(np.load("https://drive.google.com/uc?id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-"))
     data = {k: [s.decode("utf-8") for s in v.tobytes().split(b"\x00")] if v.dtype == np.uint8 else v for k, v in arrays.items()}
     df_transactions = pd.DataFrame.from_dict(data)
 
