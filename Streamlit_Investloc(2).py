@@ -259,7 +259,7 @@ Cas LMNP : 0€
     import requests
     from io import BytesIO
 
-    st.markdown("[Download transactions.npz](https://drive.google.com/uc?id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-)")
+    st.markdown("[Download transactions.npz](https://drive.google.com/file/d/1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-/view?usp=drive_link)")
 
     # Define the URL of the hosted file
     file_url = "https://drive.google.com/uc?id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-"
@@ -268,7 +268,7 @@ Cas LMNP : 0€
     response = requests.get(file_url)
     content = BytesIO(response.content)
 
-    arrays = dict(np.load(content))
+    arrays = dict(np.load(content, allow_pickle=True))
     data = {k: [s.decode("utf-8") for s in v.tobytes().split(b"\x00")] if v.dtype == np.uint8 else v for k, v in arrays.items()}
     df_transactions = pd.DataFrame.from_dict(data)
 
