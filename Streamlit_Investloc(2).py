@@ -262,13 +262,13 @@ Cas LMNP : 0€
     st.markdown("[Download transactions.npz](https://drive.google.com/file/d/1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-/view?usp=drive_link)")
 
     # Define the URL of the hosted file
-    file_url = "https://drive.google.com/uc?id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-"
+    file_url = "https://drive.google.com/uc?export=view&id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-"
 
     # Download the file using requests
     response = requests.get(file_url)
     content = response.content
 
-    arrays = dict(np.load((BytesIO(content), allow_pickle=True))
+    arrays = dict(np.load(BytesIO(content), allow_pickle=True))
     data = {k: [s.decode("utf-8") for s in v.tobytes().split(b"\x00")] if v.dtype == np.uint8 else v for k, v in arrays.items()}
     df_transactions = pd.DataFrame.from_dict(data)
 
