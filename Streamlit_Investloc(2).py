@@ -266,9 +266,9 @@ Cas LMNP : 0€
 
     # Download the file using requests
     response = requests.get(file_url)
-    content = BytesIO(response.content)
+    content = response.content
 
-    arrays = dict(np.load(content, allow_pickle=True))
+    arrays = dict(np.load((BytesIO(content), allow_pickle=True))
     data = {k: [s.decode("utf-8") for s in v.tobytes().split(b"\x00")] if v.dtype == np.uint8 else v for k, v in arrays.items()}
     df_transactions = pd.DataFrame.from_dict(data)
 
