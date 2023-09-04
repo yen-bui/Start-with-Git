@@ -8,7 +8,8 @@ def page1():
     st.write("Plotly Graph on Page 1:")
     
     # Provide the URL to your Plotly graph hosted externally (e.g., GitHub Gist, Google Drive, etc.)
-    plotly_graph_url = "https://gist.githubusercontent.com/your_username/gist_id/raw/plotly_graph.html"
+    plotly_graph_url = "https://github.com/yen-bui/Start-with-Git/blob/main/plotly_graph.html"
+    
     
     # Use the IFrame component to display the external HTML content
     st.components.v1.html(f'<iframe src="{plotly_graph_url}" width="1000" height="600"></iframe>', width=1000, height=600, scrolling=True)
