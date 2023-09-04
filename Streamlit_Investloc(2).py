@@ -262,7 +262,8 @@ Cas LMNP : 0€
     st.markdown("[Download transactions.npz](https://drive.google.com/file/d/1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-/view?usp=drive_link)")
 
     # Define the URL of the hosted file
-    file_url = "https://drive.google.com/uc?export=view&id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-"
+    # file_url = "https://drive.google.com/uc?export=view&id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-"
+    file_url = "https://drive.google.com/u/0/uc?id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-&export=download&confirm=t&uuid=ad023b80-232f-47e5-bfa0-eba2d86e2ba8&at=AB6BwCCv7Ta8KGVrTfR7IMEEUv-T:1693814743296"
 
     # Download the file using requests
     response = requests.get(file_url)
