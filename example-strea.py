@@ -8,7 +8,7 @@ def page1():
     st.write("Plotly Graph on Page 1:")
     
     # Provide the URL to the raw GitHub content of your HTML file
-    github_raw_url = "https://raw.githubusercontent.com/yen-bui/Start-with-Git/main/plotly_graph.html"
+    github_raw_url = "https://drive.google.com/uc?id=1chj9-22F3NPzwEOsonnAT5txamawookM"
     
     # Use the IFrame component to display the external HTML content
     st.components.v1.html(f'<iframe src="{github_raw_url}" width="1000" height="600"></iframe>', width=1000, height=600, scrolling=True)
