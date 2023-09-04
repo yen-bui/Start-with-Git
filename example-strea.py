@@ -11,10 +11,10 @@ def page1():
     st.write("Plotly Graph on Page 1:")
     
     # Provide the path to the local HTML file (assuming it's in the same directory)
-    local_html_path = "plotly_graph.html"
+    # local_html_path = "plotly_graph.html"
     
     # Use the components function to embed the HTML content
-    st.components.v1.html(open(local_html_path, 'r').read(), width=1000, height=600, scrolling=True)
+    st.components.v1.html(open("plotly_graph.html", 'r').read(), width=1000, height=600, scrolling=True)
     
 def page2():
     st.title("Page 2")
