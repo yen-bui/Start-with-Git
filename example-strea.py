@@ -1,4 +1,7 @@
 import streamlit as st
+import pandas as pd
+import plotly.express as px
+
 
 # Create a function to display the Plotly graph
 def display_plotly_graph():
