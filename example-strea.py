@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from streamlit.components.v1 import components
 
 def page1():
     st.title("Page 1")
@@ -9,11 +10,11 @@ def page1():
     # Display the Plotly graph using an IFrame
     st.write("Plotly Graph on Page 1:")
     
-    # Provide the direct link to the Google Drive file
-    google_drive_url = "https://drive.google.com/file/d/1chj9-22F3NPzwEOsonnAT5txamawookM/preview"
+    # Provide the path to the local HTML file (assuming it's in the same directory)
+    local_html_path = "plotly_graph.html"
     
-    # Use the iframe tag to display the external content
-    st.write(f'<iframe src="{google_drive_url}" width="1000" height="600"></iframe>', unsafe_allow_html=True)
+    # Use the components function to embed the HTML content
+    components.html(open(local_html_path, 'r').read(), width=1000, height=600, scrolling=True)
     
 def page2():
     st.title("Page 2")
