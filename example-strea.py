@@ -1,8 +1,20 @@
 import streamlit as st
 
+# Create a function to display the Plotly graph
+def display_plotly_graph():
+    # Load the Plotly HTML file
+    with open("plotly_graph.html", "r") as file:
+        plotly_html = file.read()
+
+    # Display the Plotly graph using st.write()
+    st.write(plotly_html, unsafe_allow_html=True)
+
 def page1():
     st.title("Page 1")
     st.write("Welcome to Page 1!")
+
+    # Display the Plotly graph on Page 1
+    display_plotly_graph()
 
 def page2():
     st.title("Page 2")
