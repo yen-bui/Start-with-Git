@@ -351,9 +351,8 @@ Il est intéressant de faire la même analyse sur les prix :
 
     # Générer le quatrième graphique "Evolution du prix au m2 moyen par arrondissement par année"
     # Use the components function to embed the HTML content
-    st.components.v1.html(open("Evolution_prix_m2_par_arrondissement_Paris_Plotly.html", 'r').read(), width=1000, height=600, scrolling=True)
+    st.components.v1.html(open("Evolution_prix_m2_par_arrondissement_Paris_Plotly.html", 'r').read(), width=800, height=500, scrolling=True)
     
-
     introduction_text = """
 Ici on constate une tendance à la **hausse des prix moyens au m2** dans paris 
 intramuros, cela s’explique notamment par le fait que le marché soit tendu, avec 
@@ -362,6 +361,12 @@ intramuros, cela s’explique notamment par le fait que le marché soit tendu, a
     # Afficher le texte introductif
     st.write(introduction_text)
 
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
 
     # Générer le cinquième graphique "Evolution du nombre total de ventes par mois et par arrondissement"
     # Use the components function to embed the HTML content
