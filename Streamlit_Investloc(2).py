@@ -345,8 +345,8 @@ df_final_used = pd.read_csv(csv_file_path)
     ##st.write("**Variations selon : Prix du bien - Prix au m2 - Taux de rendement**")
 
     ##introduction_text = """
-Pour enrichir davantage votre expérience, nous avons créé une **carte interactive**. Elle vous permettra de visualiser la variation des prix immobiliers selon la localisation des biens. 
-Cette carte dynamique vous permet notamment d'explorer les **fourchettes de prix, de taux de rendement et de prix au m² des biens**. Une manière visuelle et immersive d'appréhender le marché immobilier parisien.
+##Pour enrichir davantage votre expérience, nous avons créé une **carte interactive**. Elle vous permettra de visualiser la variation des prix immobiliers selon la localisation des biens. 
+##Cette carte dynamique vous permet notamment d'explorer les **fourchettes de prix, de taux de rendement et de prix au m² des biens**. Une manière visuelle et immersive d'appréhender le marché immobilier parisien.
 """
     ##st.write(introduction_text)
 
