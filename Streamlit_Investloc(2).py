@@ -241,7 +241,7 @@ Cas LMNP : 0€
     # Générer le premier graphique "Evolution du nombre total de ventes par année"
 
     # Use the components function to embed the HTML content
-    st.components.v1.html(open("Evolution_nombre_ventes_par_annee_France_Plotly.html", 'r').read(), width=700, height=600, scrolling=True)
+    st.components.v1.html(open("Evolution_nombre_ventes_par_annee_France_Plotly.html", 'r').read(), width=800, height=600, scrolling=True)
 
 
     text = """
