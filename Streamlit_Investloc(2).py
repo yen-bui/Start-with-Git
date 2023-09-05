@@ -763,10 +763,10 @@ prix, nombre de pièces, surface ou encore loyer mensuel du bien. Vous aurez ég
 
 # Fonction principale de l'application
 # Create a layout with links to the two pages
-st.sidebar.title("Navigation")
+st.sidebar.title("Projet Investissement locatif")
 #page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus"]
 page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus / Votre projet immobilier"]
-choice = st.sidebar.radio("Go to", page_links)
+choice = st.sidebar.radio("Menu", page_links)
 
 
     # En fonction du choix de l'utilisateur, appelez la fonction correspondante
