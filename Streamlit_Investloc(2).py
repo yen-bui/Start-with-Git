@@ -346,9 +346,9 @@ elif choice == "Vision France":
     page_France()
 elif choice == "Vision Paris":
     page_Paris()
-elif choice == "Carte vision Paris":
-    page_map(df_final_used)
-elif choice == "Conclusion":
-    page_conclusion()
-elif choice == "Bonus":
-    page_filtre()
+#elif choice == "Carte vision Paris":
+    #page_map(df_final_used)
+#elif choice == "Conclusion":
+    #page_conclusion()
+#elif choice == "Bonus":
+    #page_filtre()
