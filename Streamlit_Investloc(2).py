@@ -510,7 +510,7 @@ Cette carte dynamique vous permet notamment d'explorer les **fourchettes de prix
 # Create a layout with links to the two pages
 st.sidebar.title("Navigation")
 #page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus"]
-page_links = ["Machine Learning", "Vision France","Vision Paris"]
+page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris"]
 choice = st.sidebar.radio("Go to", page_links)
 
 
