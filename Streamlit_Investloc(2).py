@@ -388,7 +388,7 @@ l’année 2022 qu’au global avec les chutes au mois d’Aout et de Novembre.
 
     # Générer le sixième graphique "Evolution du prix au m2 par mois"
     # Use the components function to embed the HTML content
-    st.components.v1.html(open("Evolution_prix_m2_par_arrondissement_par_mois_Paris_Plotly.html", 'r').read(), width=1000, height=600, scrolling=True)
+    st.components.v1.html(open("Evolution_prix_m2_par_arrondissement_par_mois_Paris_Plotly.html", 'r').read(), width=800, height=500, scrolling=True)
 
     introduction_text = """
 Ici, on observe que la période de l’année a un impact sur le prix de vente, 
