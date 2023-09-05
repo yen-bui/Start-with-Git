@@ -96,6 +96,7 @@ Nous vous présenterons également **l'intérêt d'investir dans l'immobilier lo
     st.write(introduction_text)
 
 
+    
     #Visuel Flourish 1
     flourish_html_code = """
     <div class="flourish-embed" data-src="visualisation/14482386">
