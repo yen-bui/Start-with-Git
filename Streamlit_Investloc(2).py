@@ -20,6 +20,24 @@ import matplotlib.colors as colors
 #from IPython.display import display
 
 
+# Fonction pour afficher la page ML
+def page_contexte():
+    import streamlit as st
+    st.title("Contexte & Méthodologie")
+    introduction_text = """
+**Objectif :**
+
+Permettre de **prédire** avec le moins d’informations possibles (loyer au m2, prix de vente, code postal, appartement neuf ou ancien, nombre de pièces, surface habitable) le **niveau de rentabilité potentiel** d’un investissement locatif.
+
+**Démarche :**
+
+Toute l’analyse menée sur le dataset, le choix de la région, la gestion des NaNs, des valeurs aberrantes et extrêmes, l’enrichissement de ce dernier jusqu’au calcul du taux de rendement nous permettaient d’avoir un dataset préparé pour **envisager un modèle predictif de machine learning**.
+
+"""
+
+    # Afficher le texte introductif
+    st.write(introduction_text)
+
 
 # Fonction pour afficher la page "Vision France"
 def page_France():
@@ -760,11 +778,13 @@ vefa: 7.09778789337547e-05
 # Fonction principale de l'application
 # Create a layout with links to the two pages
 st.sidebar.title("Projet Investissement locatif")
-page_links = ["Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus / Votre projet immobilier", "Bonus / Machine Learning"]
+page_links = ["Contexte & Méthodologie", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus / Votre projet immobilier", "Bonus / Machine Learning"]
 choice = st.sidebar.radio("Menu", page_links)
 
 
     # En fonction du choix de l'utilisateur, appelez la fonction correspondante
+if choice == "Contexte & Méthodologie":
+    page_contexte()
 if choice == "Bonus / Machine Learning":
     page_ML()
 elif choice == "Vision France":
