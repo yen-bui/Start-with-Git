@@ -113,7 +113,13 @@ Nous vous présenterons également **l'intérêt d'investir dans l'immobilier lo
 Ce graphique représente les 10 départements ayant réalisé **le plus grand nombre de ventes d'appartements et de maisons pour la période de 2014 à 2022**. Les cinq départements les plus recherchés en 2022 se trouvent dans les régions des Hauts-de-France, d'Île-de-France, de Provence-Alpes-Côte d’Azur, de Nouvelle-Aquitaine et d'Auvergne-Rhône-Alpes.
 """
     st.write(text1)
-
+    
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
 
     #Visuel Flourish 2
     flourish_html_code_4 = """
@@ -121,7 +127,7 @@ Ce graphique représente les 10 départements ayant réalisé **le plus grand no
         <script src="https://public.flourish.studio/resources/embed.js"></script>
     </div>
     """
-    st.components.v1.html(flourish_html_code_4, height=600, scrolling=True)
+    st.components.v1.html(flourish_html_code_4, height=650, scrolling=True)
 
     text2 = """
 Ce graphique illustre la **répartition du nombre de ventes d'appartements et de maisons** dans tous les départements des cinq régions préalablement présentées. Le filtre nous permet de sélectionner la région souhaitée. De manière générale, dans ces régions, on observe **davantage de ventes d'appartements que de maisons**, à l'exception de deux régions : la Nouvelle-Aquitaine et les Hauts-de-France.
@@ -129,6 +135,13 @@ En **Île-de-France**, où le marché immobilier est **particulièrement dynamiq
 """
     # Afficher le texte
     st.write(text2)
+
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
 
 
     # Visuel Flourish 3
