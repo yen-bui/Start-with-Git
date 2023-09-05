@@ -172,7 +172,7 @@ Le loyer des appartements en Île-de-France est **le plus élevé** de toute la 
         <script src="https://public.flourish.studio/resources/embed.js"></script>
     </div>
     """
-    st.components.v1.html(flourish_html_code_2, height=600, scrolling=True)
+    st.components.v1.html(flourish_html_code_2, height=650, scrolling=True)
 
     text4 = """
 Le prix d'achat par mètre carré d'appartement atteint son **maximum** à Paris. Les prix par mètre carré sont également plus élevés en Île-de-France, en Auvergne-Rhône-Alpes, ainsi que sur la côte Atlantique et la côte d'Azur.
@@ -193,7 +193,7 @@ Le prix d'achat par mètre carré d'appartement atteint son **maximum** à Paris
         <script src="https://public.flourish.studio/resources/embed.js"></script>
     </div>
     """
-    st.components.v1.html(flourish_html_code_2, height=600, scrolling=True)
+    st.components.v1.html(flourish_html_code_2, height=650, scrolling=True)
 
     text5 = """
 En 2014 et 2022, la plus-value sur le prix d'achat par mètre carré d'appartement est notable dans l'ouest de la France, en particulier sur la côte Atlantique.
