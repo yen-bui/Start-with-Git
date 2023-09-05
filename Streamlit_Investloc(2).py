@@ -780,5 +780,5 @@ elif choice == "Carte vision Paris":
     page_map(df_final_used)
 elif choice == "Conclusion":
     page_conclusion()
-elif choice == "Bonus":
+elif choice == "Votre projet immobilier":
     page_filtre()
