@@ -103,7 +103,7 @@ Nous vous présenterons également **l'intérêt d'investir dans l'immobilier lo
         <script src="https://public.flourish.studio/resources/embed.js"></script>
     </div>
     """
-    st.components.v1.html(flourish_html_code, height=650, scrolling=True)
+    st.components.v1.html(flourish_html_code, height=630, scrolling=True)
     text1 = """
 Ce graphique représente les 10 départements ayant réalisé **le plus grand nombre de ventes d'appartements et de maisons pour la période de 2014 à 2022**. Les cinq départements les plus recherchés en 2022 se trouvent dans les régions des Hauts-de-France, d'Île-de-France, de Provence-Alpes-Côte d’Azur, de Nouvelle-Aquitaine et d'Auvergne-Rhône-Alpes.
 """
