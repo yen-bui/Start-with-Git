@@ -150,13 +150,20 @@ En **Île-de-France**, où le marché immobilier est **particulièrement dynamiq
         <script src="https://public.flourish.studio/resources/embed.js"></script>
     </div>
     """
-    st.components.v1.html(flourish_html_code_2, height=600, scrolling=True)
+    st.components.v1.html(flourish_html_code_2, height=650, scrolling=True)
 
     text3 = """
 Le loyer des appartements en Île-de-France est **le plus élevé** de toute la France. Le département **le plus onéreux** en termes de loyer est Paris.
 """
     # Afficher le texte
     st.write(text3)
+    
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
 
 
     # Visuel Flourish 4
@@ -173,6 +180,12 @@ Le prix d'achat par mètre carré d'appartement atteint son **maximum** à Paris
     # Afficher le texte
     st.write(text4)
 
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
 
     # Visuel Flourish 5
     flourish_html_code_2 = """
@@ -184,7 +197,7 @@ Le prix d'achat par mètre carré d'appartement atteint son **maximum** à Paris
 
     text5 = """
 En 2014 et 2022, la plus-value sur le prix d'achat par mètre carré d'appartement est notable dans l'ouest de la France, en particulier sur la côte Atlantique.
-La **plus-value reste important en Ile-de-France**.
+La **plus-value reste importante en Ile-de-France**.
 
 """
     # Afficher le texte
