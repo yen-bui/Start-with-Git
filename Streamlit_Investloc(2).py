@@ -370,7 +370,7 @@ intramuros, cela s’explique notamment par le fait que le marché soit tendu, a
 
     # Générer le cinquième graphique "Evolution du nombre total de ventes par mois et par arrondissement"
     # Use the components function to embed the HTML content
-    st.components.v1.html(open("Evolution_ventes_par_arrondissement_par_mois_Paris_Plotly.html", 'r').read(), width=1000, height=600, scrolling=True)
+    st.components.v1.html(open("Evolution_ventes_par_arrondissement_par_mois_Paris_Plotly.html", 'r').read(), width=800, height=500, scrolling=True)
     
     introduction_text = """
 Ici, on retrouve clairement le même **effet de saisonnalité** par mois au sein de 
@@ -378,6 +378,13 @@ l’année 2022 qu’au global avec les chutes au mois d’Aout et de Novembre.
 """
     # Afficher le texte introductif
     st.write(introduction_text)
+
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
 
     # Générer le sixième graphique "Evolution du prix au m2 par mois"
     # Use the components function to embed the HTML content
