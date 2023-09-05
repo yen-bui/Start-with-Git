@@ -16,7 +16,7 @@ import branca.colormap as cm
 import matplotlib.cm as cm_plt
 import matplotlib.colors as colors
 #from ipywidgets import interact, widgets
-from IPython.display import display
+#from IPython.display import display
 
 
 
