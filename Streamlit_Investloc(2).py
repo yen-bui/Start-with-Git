@@ -560,7 +560,6 @@ def page_filtre():
     import streamlit as st
     st.title("Estimation de la rentabilité de votre projet")
 
-    #introduction_text = """ A présent, nous vous invitons à **réaliser une estimation de la rentabilité** de votre projet en fonction des critères de votre choix : emplacement du bien (arrondissement), prix, nombre de pièces, surface ou encore loyer mensuel du bien. Vous aurez également l'occasion de rechercher un bien en fonction du **taux de rendement souhaité**."""
     st.write(introduction_text)
 
     import pandas as pd
