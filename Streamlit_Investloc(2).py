@@ -264,14 +264,18 @@ Cas LMNP : 0€
 
     image_url = "https://i.ibb.co/Cz8P98M/Image1.png"
     st.image(image_url, caption="Image1", use_column_width=True)
-
-
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
 
 
     # Générer le premier graphique "Evolution du nombre total de ventes par année"
 
     # Use the components function to embed the HTML content
-    st.components.v1.html(open("Evolution_nombre_ventes_par_annee_France_Plotly.html", 'r').read(), width=800, height=400, scrolling=True)
+    st.components.v1.html(open("Evolution_nombre_ventes_par_annee_France_Plotly.html", 'r').read(), width=800, height=600, scrolling=True)
     text = """
     Ici, on identifie clairement une **incidence de l’évolution** des cycles économiques 
 sur le marché de l’immobilier (effet de saisonnalité par année). Bien évidemment,
