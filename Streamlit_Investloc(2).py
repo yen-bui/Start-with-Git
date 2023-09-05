@@ -443,7 +443,7 @@ def page_conclusion():
     st.title("Conclusion")
 
     introduction_text = """
-En conclusion, il convient de retenir les éléments suivants :
+##En conclusion, il convient de retenir les éléments suivants :
 
 Au global, les prix de l’immobilier évoluent et suivent **une évolution que l’on 
 pourrait même qualifier d’exponentielle**, alimentée à la fois par des effets réels 
