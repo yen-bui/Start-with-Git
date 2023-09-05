@@ -10,6 +10,8 @@ import numpy_financial as npf
 import plotly.express as px
 import os
 
+pip install ipywidgets
+
 import branca.colormap as cm
 import matplotlib.cm as cm_plt
 import matplotlib.colors as colors
