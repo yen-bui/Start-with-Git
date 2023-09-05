@@ -98,7 +98,8 @@ Nous vous présenterons également **l'intérêt d'investir dans l'immobilier lo
     st.write("")
     # Add an empty line to create space
     st.write("")
-
+    # Add an empty line to create space
+    st.write("")
 
     
     #Visuel Flourish 1
