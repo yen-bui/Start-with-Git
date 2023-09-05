@@ -660,6 +660,13 @@ de la 25ème année si payé cash.
     # Afficher les sous-figures dans Streamlit
     st.pyplot(fig)
 
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+
     conclusion_text = """
 Pour les graphiques, on tient compte des revenus locatifs mais aussi de la plus-value potentielle liée à l’évolution des prix de l’immobilier. 
 """
