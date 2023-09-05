@@ -667,8 +667,3 @@ elif choice == "Bonus":
     page_filtre()
 
 
-    # Afficher les informations des auteurs en bas de la barre latérale
-    # st.sidebar.write("**Auteurs :**")
-    # st.sidebar.write("Yen BUI")
-    # st.sidebar.write("Thomas JOSSIER")
-    # st.sidebar.write("Torkia DRIDER")
