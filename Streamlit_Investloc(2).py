@@ -9,6 +9,7 @@ import folium
 import numpy_financial as npf
 import plotly.express as px
 import os
+import streamlit as st
 
 #pip install ipywidgets
 
