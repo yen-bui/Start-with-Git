@@ -94,6 +94,10 @@ Nous vous présenterons également **l'intérêt d'investir dans l'immobilier lo
 
     # Afficher le texte introductif
     st.write(introduction_text)
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
 
 
     
