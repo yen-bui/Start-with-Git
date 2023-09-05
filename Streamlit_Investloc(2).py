@@ -21,61 +21,6 @@ import matplotlib.colors as colors
 
 
 
-# Fonction pour afficher la page ML
-def page_ML():
-    import streamlit as st
-    st.title("Machine Learning")
-    introduction_text = """
-**Objectif :**
-
-Permettre de **prédire** avec le moins d’informations possibles (loyer au m2, prix de vente, code postal, appartement neuf ou ancien, nombre de pièces, surface habitable) le **niveau de rentabilité potentiel** d’un investissement locatif.
-
-**Démarche :**
-
-Toute l’analyse menée sur le dataset, le choix de la région, la gestion des NaNs, des valeurs aberrantes et extrêmes, l’enrichissement de ce dernier jusqu’au calcul du taux de rendement nous permettaient d’avoir un dataset préparé pour **envisager un modèle predictif de machine learning**.
-
-**Etapes :**
-
-- Suppression de toutes les colonnes non essentielles pour garder celles citées au-dessus
-
-- Création des tranches de rentabilité (la variable cible) sur la base du taux de rendement
-
-- Remplacement de la valeur booléenne True/False de la colonne VEFA par 0 et 1
-
-- Test – Train - Split
-
-- Ordinal encoder de la variable cible
-
-- Normalisation
-
-- Résultats & metrics 
-
-**Résultats :**
-
-Accuracy: 0.8916181311724487
-
-F1 Score: 0.8876209442211274 
-
-prix: 0.4769188103248616
-
-surface_habitable: 0.4134632071728446
-
-loyer_m2_appartement: 0.048852671327828646
-
-code_postal: 0.041553367818537676
-
-n_pieces: 0.019140965476993666
-
-vefa: 7.09778789337547e-05 
-
-"""
-
-    # Afficher le texte introductif
-    st.write(introduction_text)
-
-
-
-
 # Fonction pour afficher la page "Vision France"
 def page_France():
     import streamlit as st
@@ -759,18 +704,68 @@ prix, nombre de pièces, surface ou encore loyer mensuel du bien. Vous aurez ég
     else:
         st.warning("Aucun bien ne correspond aux critères de recherche.")
 
+# Fonction pour afficher la page ML
+def page_ML():
+    import streamlit as st
+    st.title("Bonus / Machine Learning")
+    introduction_text = """
+**Objectif :**
+
+Permettre de **prédire** avec le moins d’informations possibles (loyer au m2, prix de vente, code postal, appartement neuf ou ancien, nombre de pièces, surface habitable) le **niveau de rentabilité potentiel** d’un investissement locatif.
+
+**Démarche :**
+
+Toute l’analyse menée sur le dataset, le choix de la région, la gestion des NaNs, des valeurs aberrantes et extrêmes, l’enrichissement de ce dernier jusqu’au calcul du taux de rendement nous permettaient d’avoir un dataset préparé pour **envisager un modèle predictif de machine learning**.
+
+**Etapes :**
+
+- Suppression de toutes les colonnes non essentielles pour garder celles citées au-dessus
+
+- Création des tranches de rentabilité (la variable cible) sur la base du taux de rendement
+
+- Remplacement de la valeur booléenne True/False de la colonne VEFA par 0 et 1
+
+- Test – Train - Split
+
+- Ordinal encoder de la variable cible
+
+- Normalisation
+
+- Résultats & metrics 
+
+**Résultats :**
+
+Accuracy: 0.8916181311724487
+
+F1 Score: 0.8876209442211274 
+
+prix: 0.4769188103248616
+
+surface_habitable: 0.4134632071728446
+
+loyer_m2_appartement: 0.048852671327828646
+
+code_postal: 0.041553367818537676
+
+n_pieces: 0.019140965476993666
+
+vefa: 7.09778789337547e-05 
+
+"""
+
+    # Afficher le texte introductif
+    st.write(introduction_text)
 
 
 # Fonction principale de l'application
 # Create a layout with links to the two pages
 st.sidebar.title("Projet Investissement locatif")
-#page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus"]
-page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus / Votre projet immobilier"]
+page_links = ["Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus / Votre projet immobilier", "Bonus / Machine Learning"]
 choice = st.sidebar.radio("Menu", page_links)
 
 
     # En fonction du choix de l'utilisateur, appelez la fonction correspondante
-if choice == "Machine Learning":
+if choice == "Bonus / Machine Learning":
     page_ML()
 elif choice == "Vision France":
     page_France()
