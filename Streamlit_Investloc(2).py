@@ -506,11 +506,157 @@ Cette carte dynamique vous permet notamment d'explorer les **fourchettes de prix
     variable_selector = st.selectbox("Sélectionnez une variable:", ['Prix', 'Prix au m2', 'Taux de rendement'])
     update_map(variable_name=variable_selector)
 
+import matplotlib.pyplot as plt
+
+# Fonction pour la page "Conclusion"
+def page_conclusion():
+    import streamlit as st
+    st.title("Conclusion")
+
+    introduction_text = """
+En conclusion, il convient de retenir les éléments suivants :
+
+Au global, les prix de l’immobilier évoluent et suivent **une évolution que l’on 
+pourrait même qualifier d’exponentielle**, alimentée à la fois par des effets réels 
+de l’économie réelle mais également par la spéculation sur les marchés.
+
+Si au sein d’une année (sur 12 mois), ou au sein d’un cycle court (3 annés), on 
+observe des **variations sur l’offre et la demande** qui impactent les prix qui 
+peuvent être plus ou moins significatives selon les arrondissements de Paris, il 
+convient de noter que ces effets sont lissés sur une vision plus long terme.
+
+Un investisseur peut donc **maximiser la profitabilité** de on investissement en 
+choisissant la bonne année et la bonne période de l’année, mais ce tromper sur 
+ce couple de temporalité, n’aura pas réellement d’effet significatif à long terme 
+sur sa rentabilité.
+
+Enfin, le choix du **régime et de la modalité de financement auront également un 
+fort impact sur la rentabilité** de l’investissement, car en considérant un régime 
+LMNP, un investissement locatif en 2022 était rentabilisé au bout de la 32ème 
+année si intégralement financé par emprunt sur 25 ans, contrairement au bout 
+de la 25ème année si payé cash.
+"""
+    # Afficher le texte introductif
+    st.write(introduction_text)
+
+    st.write("**Paiement cash**")
+
+    # Utilisation du style 'default'
+    plt.style.use('default')
+
+    # Création du graphique en utilisant matplotlib
+    fig, axes = plt.subplots(1, 2, figsize=(15, 5))
+
+    # Première sous-figure
+    df_final_used['produits 10 ans'] = df_final_used['Loyer mensuel'] * 120
+    PV = df_final_used['prix'] * 0.1
+    df_final_used['gain à date 10 ans'] = df_final_used['produits 10 ans'] / df_final_used["prix acquisition cash + notaire"]
+    mean_produits_10_ans = df_final_used['produits 10 ans'].mean() + PV.mean()
+    mean_mensualite_10_ans = df_final_used["prix acquisition cash + notaire"].mean()
+    axes[0].bar(['produits 10 ans', 'prix acquisition cash + notaire'], [mean_produits_10_ans, mean_mensualite_10_ans])
+    axes[0].set_xlabel('Colonnes')
+    axes[0].set_ylabel('Moyenne')
+    axes[0].set_title('Moyenne des valeurs pour chaque colonne (10 ans)')
+
+    # Deuxième sous-figure
+    df_final_used['produits 25 ans'] = df_final_used['Loyer mensuel'] * 300
+    PV = df_final_used['prix'] * 0.25
+    df_final_used['gain à date 25 ans'] = df_final_used['produits 25 ans'] / df_final_used["prix acquisition cash + notaire"]
+    mean_produits_25_ans = df_final_used['produits 25 ans'].mean() + PV.mean()
+    mean_mensualite_25_ans = df_final_used["prix acquisition cash + notaire"].mean()
+    axes[1].bar(['produits 25 ans', 'prix acquisition cash + notaire'], [mean_produits_25_ans, mean_mensualite_25_ans])
+    axes[1].set_xlabel('Colonnes')
+    axes[1].set_ylabel('Moyenne')
+    axes[1].set_title('Moyenne des valeurs pour chaque colonne (25 ans)')
+
+    # Ajustement automatique des espacements
+    plt.tight_layout()
+
+    # Afficher les sous-figures
+    st.pyplot(fig)
+
+    import streamlit as st
+    st.write("**Paiement à crédit**")
+
+    # Générer les 3 graphiques en barres
+
+    # Ajout de la colonne "produits 10 ans"
+    df_final_used['produits 10 ans'] = df_final_used['Loyer mensuel'] * 120
+    PV = df_final_used['prix'] * 0.1
+
+    # Calcul de la moyenne pour chaque colonne
+    mean_produits_10_ans = df_final_used['produits 10 ans'].mean() + PV.mean()
+    mean_mensualite_10_ans = (df_final_used['Mensualité'] * 120).mean()
+
+    # Calcul de la colonne "gain à date 10 ans"
+    df_final_used['gain à date 10 ans'] = df_final_used['produits 10 ans'] / df_final_used['Mensualité'] * 120
+
+    # Ajout de la colonne "produits 25 ans"
+    df_final_used['produits 25 ans'] = df_final_used['Loyer mensuel'] * 300
+    PV = df_final_used['prix'] * 0.25
+
+    # Calcul de la colonne "gain à date 25 ans"
+    df_final_used['gain à date 25 ans'] = df_final_used['produits 25 ans'] / df_final_used['Mensualité'] * 300
+
+    # Calcul de la moyenne pour chaque colonne
+    mean_produits_25_ans = df_final_used['produits 25 ans'].mean() + PV.mean()
+    mean_mensualite_25_ans = (df_final_used['Mensualité'] * 300).mean()
+
+    # Ajout de la colonne "produits 32 ans"
+    df_final_used['produits 32 ans'] = df_final_used['Loyer mensuel'] * 384
+    PV = df_final_used['prix'] * 0.25
+
+    # Calcul de la colonne "gain à date 32 ans"
+    df_final_used['gain à date 32 ans'] = df_final_used['produits 32 ans'] / df_final_used['Mensualité'] * 384
+
+    # Calcul de la moyenne pour chaque colonne
+    mean_produits_32_ans = df_final_used['produits 32 ans'].mean() + PV.mean()
+    mean_mensualite_32_ans = (df_final_used['Mensualité'] * 300).mean()
+
+    # Utilisation du style 'plain'
+    plt.style.use('default')
+
+    # Création du graphique en utilisant matplotlib
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    # Première sous-figure
+    axes[0].bar(['produits 10 ans', 'Mensualité * 120'], [mean_produits_10_ans, mean_mensualite_10_ans])
+    axes[0].set_xlabel('Colonnes')
+    axes[0].set_ylabel('Moyenne')
+    axes[0].set_title('Moyenne des valeurs pour chaque colonne (10 ans)')
+    axes[0].ticklabel_format(axis='y', style='plain')  # Formater les étiquettes en valeurs
+
+    # Deuxième sous-figure
+    axes[1].bar(['produits 25 ans', 'Mensualité * 300'], [mean_produits_25_ans, mean_mensualite_25_ans])
+    axes[1].set_xlabel('Colonnes')
+    axes[1].set_ylabel('Moyenne')
+    axes[1].set_title('Moyenne des valeurs pour chaque colonne (25 ans)')
+    axes[1].ticklabel_format(axis='y', style='plain')  # Formater les étiquettes en valeurs
+
+    # Troisième sous-figure
+    axes[2].bar(['produits 32 ans', 'Mensualité * 384'], [mean_produits_32_ans, mean_mensualite_32_ans])
+    axes[2].set_xlabel('Colonnes')
+    axes[2].set_ylabel('Moyenne')
+    axes[2].set_title('Moyenne des valeurs pour chaque colonne (32 ans)')
+    axes[2].ticklabel_format(axis='y', style='plain')  # Formater les étiquettes en valeurs
+
+    # Ajustement automatique des espacements
+    plt.tight_layout()
+
+    # Afficher les sous-figures dans Streamlit
+    st.pyplot(fig)
+
+    conclusion_text = """
+Pour les graphiques, on tient compte des revenus locatifs mais aussi de la plus-value potentielle liée à l’évolution des prix de l’immobilier. 
+"""
+    st.write(conclusion_text)
+
+
 # Fonction principale de l'application
 # Create a layout with links to the two pages
 st.sidebar.title("Navigation")
 #page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus"]
-page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris"]
+page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion"]
 choice = st.sidebar.radio("Go to", page_links)
 
 
@@ -523,7 +669,7 @@ elif choice == "Vision Paris":
     page_Paris()
 elif choice == "Carte vision Paris":
     page_map(df_final_used)
-#elif choice == "Conclusion":
-    #page_conclusion()
+elif choice == "Conclusion":
+    page_conclusion()
 #elif choice == "Bonus":
     #page_filtre()
