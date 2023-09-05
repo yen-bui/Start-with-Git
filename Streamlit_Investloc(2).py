@@ -675,7 +675,7 @@ Pour les graphiques, on tient compte des revenus locatifs mais aussi de la plus-
 # Fonction afficher la page "Bonus"
 def page_filtre():
     import streamlit as st
-    st.title("Estimation de la rentabilité de votre projet")
+    st.title("Votre projet immobilier")
 
     introduction_text = """
 A présent, nous vous invitons à **réaliser une estimation de la rentabilité** de votre projet en fonction des critères de votre choix : emplacement du bien (arrondissement),
@@ -765,7 +765,7 @@ prix, nombre de pièces, surface ou encore loyer mensuel du bien. Vous aurez ég
 # Create a layout with links to the two pages
 st.sidebar.title("Navigation")
 #page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus"]
-page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus"]
+page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Votre projet immobilier"]
 choice = st.sidebar.radio("Go to", page_links)
 
 
