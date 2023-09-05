@@ -1,10 +1,20 @@
 import pandas as pd
+import numpy as np
 import plotly.graph_objects as go
 import locale
 from calendar import month_name
 import matplotlib.pyplot as plt
 from streamlit_folium import folium_static
 import folium
+import numpy_financial as npf
+import plotly.express as px
+import os
+
+import branca.colormap as cm
+import matplotlib.cm as cm_plt
+import matplotlib.colors as colors
+from ipywidgets import interact, widgets
+from IPython.display import display
 
 
 
@@ -223,244 +233,12 @@ Cas LMNP : 0€
     st.image(image_url, caption="Image1", use_column_width=True)
 
 
-    def generate_price_chart(dataframe):
-     
-     dataframe['month'] = dataframe['date_transaction'].dt.month
-
-     mean_price_per_m2_by_month_and_arrondissement = dataframe.groupby(['ville', 'month'])['Prix m2'].mean().reset_index(name='Prix moyen m2')
-
-     mean_price_per_m2_by_month_and_arrondissement = mean_price_per_m2_by_month_and_arrondissement.sort_values(by='month')
-
-     month_names_fr = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
-
-     traces = []
-     for arrondissement in mean_price_per_m2_by_month_and_arrondissement['ville'].unique():
-            data_arrondissement = mean_price_per_m2_by_month_and_arrondissement[mean_price_per_m2_by_month_and_arrondissement['ville'] == arrondissement]
-            arrondissement_name = f'Arrondissement {arrondissement}'
-            arrondissement_name = arrondissement_name.replace('Arrondissement ', '')
-            hover_text = [f'Ville: {arrondissement}<br>Mois: {month}<br>Prix moyen au m2: {price:.2f}' for month, price in zip(month_names_fr, data_arrondissement['Prix moyen m2'])]
-            trace = go.Scatter(x=month_names_fr, y=data_arrondissement['Prix moyen m2'], mode='lines', name=arrondissement_name, hovertemplate='%{text}', text=hover_text)
-            traces.append(trace)
-
-     fig = go.Figure(data=traces)
-
-     fig.update_layout(title='Évolution du prix moyen au m2 par mois et par arrondissement de Paris', xaxis_title='Mois', yaxis_title='Prix moyen au m2')
-
-     return fig
-
-    
-
-
-    import pandas as pd
-    import plotly.graph_objects as go
-    import locale
-    from calendar import month_name
-    import numpy as np
-    import requests
-    from io import BytesIO
-
-    st.markdown("[Download transactions.npz](https://drive.google.com/file/d/1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-/view?usp=drive_link)")
-
-    # Define the URL of the hosted file
-    # file_url = "https://drive.google.com/uc?export=view&id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-"
-    file_url = "https://drive.google.com/u/0/uc?id=1Kmb0PPDdfEwP8U2E7GnZ_yeSnPNeKKo-&export=download&confirm=t&uuid=ad023b80-232f-47e5-bfa0-eba2d86e2ba8&at=AB6BwCCv7Ta8KGVrTfR7IMEEUv-T:1693814743296"
-
-    # Download the file using requests
-    response = requests.get(file_url)
-    content = response.content
-
-    arrays = dict(np.load(BytesIO(content), allow_pickle=True))
-    data = {k: [s.decode("utf-8") for s in v.tobytes().split(b"\x00")] if v.dtype == np.uint8 else v for k, v in arrays.items()}
-    df_transactions = pd.DataFrame.from_dict(data)
-
-    df_transactions["date_transaction"]=pd.to_datetime(df_transactions.date_transaction)
-
-    df_transactions['annee'] = df_transactions['date_transaction'].dt.year
-
-    #Filtre sur 2022
-
-    df_transactions_filtré = df_transactions.loc[df_transactions['annee'] == 2022].copy()
-
-    #Création de la clef commune
-    df_transactions_filtré["departement"] = df_transactions_filtré["departement"].astype(str)
-
-    df_transactions_filtré["KEY"] = df_transactions_filtré["departement"].astype(str) + '-' + df_transactions_filtré["id_ville"].astype(str)
-
-
-
-    df_loyers = pd.read_csv("loyers.csv", sep=",")
-
-    #Filtre sur 2022
-    df_loyers = df_loyers[df_loyers["date"] == 2022]
-
-    #Création de la  clé pour le futur merge
-    df_loyers["id_ville"] = df_loyers["id_ville"].astype(int)
-
-    df_loyers["KEY"] = df_loyers["departement"].astype(str) + '-' + df_loyers["id_ville"].astype(str)
-
-    #On retire les colonnes qui vont créer des doublons lors du merge
-    df_loyers = df_loyers.drop(["departement", "id_ville","ville", "date"], axis=1)
-
-
-
-    df_foyers = pd.read_csv("foyers_fiscaux.csv", sep=",")
-
-
-    #Création de la  clé pour le futur merge
-
-    df_foyers["KEY"] = df_foyers["departement"].astype(str) + '-' + df_foyers["id_ville"].astype(str)
-
-    #Ici on fait une moyenne car données 2022 non dispo, et on enlève toutes les colonnes non utiles, et qui vont créer des doublons lors du merge
-    df_foyers['moyenne_foyers_fiscaux'] = df_foyers.groupby('KEY')['n_foyers_fiscaux'].transform('mean')
-    df_foyers['moyenne_revenu_fiscal'] = df_foyers.groupby('KEY')['revenu_fiscal_moyen'].transform('mean')
-
-    df_foyers_used = df_foyers[["KEY", "moyenne_foyers_fiscaux", "moyenne_revenu_fiscal"]]
-
-    #On enlève les doublons crées mécaniquement par la moyenne, on garde une seule occurence par clé unique
-    df_foyers_used= df_foyers_used.drop_duplicates()
-
-
-    #On merge
-
-    df_final = pd.merge(df_loyers, df_transactions_filtré, on="KEY")
-
-    df_final = pd.merge(df_final, df_foyers_used, on="KEY")
-
-
-    #On enlève les caractères spéciaux des surfaces
-
-    liste = ["departement", "ville", "adresse", "type_batiment"]
-    liste2 = ["surface_dependances", "surface_locaux_industriels", "surface_terrains_agricoles", "surface_terrains_sols", "surface_terrains_nature"]
-
-    caracteres_a_supprimer = ['{', '}']
-
-    for colonne in liste + liste2:
-     df_final[colonne] = df_final[colonne].astype(str).str.replace('|'.join(caracteres_a_supprimer), '')
-
-    df_final[liste] = df_final[liste].astype(str)
-
-    df_final[liste2] = df_final[liste2].replace('', pd.NA).apply(pd.to_numeric, errors='coerce')
-
-    df_final[liste2] = df_final[liste2].astype('Int64')
-
-
-    #On créer de nouvelles colonnes utiles pour notre étude
-    df_final["Prix m2"] = df_final["prix"] / df_final["surface_habitable"]
-    df_final['moyenne_foyers_fiscaux'] = df_foyers.groupby('KEY')['n_foyers_fiscaux'].transform('mean')
-
-
-    import numpy as np
-    import numpy_financial as npf
-
-    # Taux d'intérêt mensuel et nombre de périodes/mois
-    taux_interet_mensuel = 2.11 / 12 / 100
-    nombre_mois = 25 * 12
-
-    # Calcul de la mensualité pour chaque montant de prêt
-    df_final['Mensualité'] = npf.pmt(taux_interet_mensuel, nombre_mois, -df_final['prix'])
-
-    df_final['Coût total des intérêts'] = (df_final['Mensualité'] * nombre_mois) - df_final['prix']
-
-    df_final['Frais de notaire'] = df_final.apply(lambda row: row['prix'] * 0.08 if not row['vefa'] else row['prix'] * 0.04, axis=1)
-
-    df_final["prix acquisition yc i + notaire"] = df_final["prix"]+df_final["Coût total des intérêts"]+df_final["Frais de notaire"]
-    df_final["prix acquisition cash + notaire"] = df_final["prix"]+df_final["Frais de notaire"]
-
-
-    df_final['Loyer mensuel'] = np.where(df_final['type_batiment'] == "Maison",
-                                     df_final['loyer_m2_maison'] * df_final['surface_habitable'],
-                                     df_final['loyer_m2_appartement'] * df_final['surface_habitable'])
-
-    df_final["Taux rendement i"] = ( (df_final["Loyer mensuel"] *12 ) / df_final["prix acquisition yc i + notaire"])*100
-    df_final["Taux rendement cash"] = ( (df_final["Loyer mensuel"] *12 ) / df_final["prix acquisition cash + notaire"])*100
-
-
-
-    # Ajout de la colonne "produits 10 ans"
-    df_final['produits 10 ans'] = df_final['Loyer mensuel'] * 120 + df_final['prix'] * 0.1
-
-    # Calcul de la colonne "gain à date 10 ans"
-    df_final['gain à date 10 ans'] = df_final['produits 10 ans'] / (df_final['Mensualité'] * 120)
-
-
-    # Ajout de la colonne "produits 25 ans"
-    df_final['produits 25 ans'] = df_final['Loyer mensuel'] * 300 + df_final['prix'] * 0.25
-
-    # Calcul de la colonne "gain à date 25 ans"
-    df_final['gain à date 25 ans'] = df_final['produits 25 ans'] / (df_final['Mensualité'] * 300)
-
-
-    #Bornage des données et suppression d'une colonne non utile
-    df_final_used = df_final[df_final["departement"] == "75"]
-    df_final_used= df_final_used[df_final_used["type_batiment"] == "Appartement"]
-    df_final_used= df_final_used[df_final_used["Prix m2"] <25000]
-    df_final_used= df_final_used[df_final_used["Prix m2"] >5000]
-    df_final_used= df_final_used[df_final_used["surface_habitable"] >9]
-    df_final_used= df_final_used[df_final_used["surface_habitable"] <150]
-    df_final_used= df_final_used[df_final_used["prix"] <1000000]
-    df_final_used= df_final_used[df_final_used["n_pieces"] <10]
-    df_final_used= df_final_used[df_final_used["n_pieces"] >1]
-
-    df_final_used= df_final_used.drop("moyenne_foyers_fiscaux", axis=1)
-
-
-    import streamlit as st
-    from streamlit_folium import folium_static
-    import folium
-
-
-    #Changement de type de données de la colonne date_transactions pour extraire l'année pour nos filtres sur le dataframe.
-
-
-    df_transactions["date_transaction"]=pd.to_datetime(df_transactions.date_transaction)
-
-
-    #Extraction de l'année dans une nouvelle colonne pour nos filtres sur le dataframe
-
-    df_transactions['annee'] = df_transactions['date_transaction'].dt.year
-
-    #Filtre sur département 75
-
-    df_transactions_filtré = df_transactions.loc[df_transactions['departement'] == "75"].copy()
-
-    df_transactions_filtré['month'] = df_transactions_filtré['date_transaction'].dt.month
-
-    df_transactions_filtré["Prix m2"] = df_transactions_filtré["prix"] / df_transactions_filtré["surface_habitable"]
-
-    df_final_used_GRAPH = df_transactions_filtré
-
-
-
-    df_final_used_GRAPH= df_final_used_GRAPH[df_final_used_GRAPH["type_batiment"] == "Appartement"]
-
-    df_final_used_GRAPH= df_final_used_GRAPH[df_final_used_GRAPH["Prix m2"] <25000]
-    df_final_used_GRAPH= df_final_used_GRAPH[df_final_used_GRAPH["Prix m2"] >5000]
-    df_final_used_GRAPH= df_final_used_GRAPH[df_final_used_GRAPH["surface_habitable"] >9]
-    df_final_used_GRAPH= df_final_used_GRAPH[df_final_used_GRAPH["surface_habitable"] <150]
-    df_final_used_GRAPH= df_final_used_GRAPH[df_final_used_GRAPH["prix"] <1000000]
-    df_final_used_GRAPH= df_final_used_GRAPH[df_final_used_GRAPH["n_pieces"] <10]
-    df_final_used_GRAPH= df_final_used_GRAPH[df_final_used_GRAPH["n_pieces"] >1]
 
 
     # Générer le premier graphique "Evolution du nombre total de ventes par année"
 
-    # Calculer le nombre total de ventes pour chaque année
-    total_sales_by_year = df_final_used_GRAPH.groupby('annee').size().reset_index(name='Total Ventes')
-
-    # Trier le DataFrame par la colonne 'YEAR'
-    total_sales_by_year = total_sales_by_year.sort_values(by='annee')
-
-    # Tracer la courbe pour représenter l'évolution du nombre total de ventes
-    trace4 = go.Scatter(x=total_sales_by_year['annee'], y=total_sales_by_year['Total Ventes'], mode='lines', name='Nombre total de ventes par année')
-
-    # Créer la figure et ajoutez la trace
-    fig4 = go.Figure(data=[trace4])
-
-    # Mettre à jour la mise en page du graphique
-    fig4.update_layout(title='Évolution du nombre total de ventes par année', xaxis_title='Année', yaxis_title='Nombre total de ventes')
-    
-    # Afficher le premier graphique dans Streamlit
-    st.plotly_chart(fig4, use_container_width=True)
+    # Use the components function to embed the HTML content
+    st.components.v1.html(open("Evolution_nombre_ventes_par_annee_France_Plotly.html", 'r').read(), width=1000, height=600, scrolling=True)
 
 
     text = """
@@ -473,33 +251,9 @@ ici la chute observée en 2020 est faussée, puisqu’il s’agit de l’année 
     st.write(text)
 
 
-   # Générer le deuxième graphique "Evolution du nombre total de ventes par mois"
-   # Définir la langue locale en français
-    locale.setlocale(locale.LC_TIME, 'fr_FR')
-
-
-    df_final_used['month'] = df_final_used['date_transaction'].dt.month
-
-    # Calculer le nombre total de ventes pour chaque mois
-    total_sales_by_month = df_final_used.groupby('month').size().reset_index(name='Total Ventes')
-
-    # Trier le DataFrame par la colonne 'month'
-    total_sales_by_month = total_sales_by_month.sort_values(by='month')
-
-    # Obtenir les noms des mois en français
-    month_names_fr = [month_name[i].capitalize() for i in total_sales_by_month['month']]
-
-    # Tracer la courbe pour représenter l'évolution du nombre total de ventes par mois
-    trace3 = go.Scatter(x=month_names_fr, y=total_sales_by_month['Total Ventes'], mode='lines', name='Nombre total de ventes par mois')
-
-    # Créer la figure et ajoutez la trace
-    fig3 = go.Figure(data=[trace3])
-
-    # Mettre à jour la mise en page du graphique
-    fig3.update_layout(title='Évolution du nombre total de ventes par mois', xaxis_title='Mois', yaxis_title='Nombre total de ventes')
-
-    # Afficher le deuxième graphique dans Streamlit
-    st.plotly_chart(fig3, use_container_width=True)
+    # Générer le deuxième graphique "Evolution du nombre total de ventes par mois"
+    # Use the components function to embed the HTML content
+    st.components.v1.html(open("Evolution_nombre_ventes_par_mois_2022_France_Plotly.html", 'r').read(), width=1000, height=600, scrolling=True)
 
 
     text = """
@@ -515,31 +269,9 @@ correspond à la signature de l’acte authentique chez le notaire.
 
 
     # Générer le troisième graphique "Evolution du nombre total de ventes par arrondissement par année"
-
-    # Calculer le nombre total de ventes pour chaque année et chaque arrondissement
-    total_sales = df_final_used_GRAPH.groupby(['ville', 'annee']).size().reset_index(name='Nombre total de ventes')
-
-    # Trier le DataFrame par la colonne 'annee'
-    total_sales = total_sales.sort_values(by='annee')
-
-    # Créer une trace pour chaque arrondissement
-    traces = []
-    for ville in total_sales['ville'].unique():
-        data_ville = total_sales[total_sales['ville'] == ville]
-        trace5 = go.Scatter(x=data_ville['annee'], y=data_ville['Nombre total de ventes'], mode='lines', name=ville)
-        hover_text = [f'Ville: {ville}<br>Année: {annee}<br>Nombre total de ventes: {sales}' for annee, sales in zip(data_ville['annee'], data_ville['Nombre total de ventes'])]
-        trace5.hovertemplate = '%{text}'
-        trace5.text = hover_text
-        traces.append(trace5)
-
-    # Créer la figure et ajoutez les traces
-    fig5 = go.Figure(data=traces)
-
-    # Metter à jour la mise en page du graphique
-    fig5.update_layout(title='Évolution du nombre total de ventes par arrondissement de Paris', xaxis_title='Année', yaxis_title='Nombre total de ventes')
-
-    # Afficher le cinquième graphique dans Streamlit
-    st.plotly_chart(fig5, use_container_width=True)
+    # Use the components function to embed the HTML content
+    st.components.v1.html(open("Evolution_nombre_ventes_par_arrondissement_Paris_Plotly.html", 'r').read(), width=1000, height=600, scrolling=True)
+   
 
     introduction_text = """
 Il est intéressant de remarquer que le **marché parisien est très tendu**, ainsi nous 
@@ -553,31 +285,9 @@ Il est intéressant de faire la même analyse sur les prix :
 
 
     # Générer le quatrième graphique "Evolution du prix au m2 moyen par arrondissement par année"
-
-    # Calculer la moyenne du prix au m2 pour chaque année et chaque arrondissement
-    mean_prices = df_final_used_GRAPH.groupby(['ville', 'annee'])['Prix m2'].mean().reset_index()
-
-    # Trier le DataFrame par la colonne 'annee'
-    mean_prices = mean_prices.sort_values(by='annee')
-
-    # Créer une trace pour chaque arrondissement
-    traces = []
-    for ville in mean_prices['ville'].unique():
-        data_ville = mean_prices[mean_prices['ville'] == ville]
-        trace6 = go.Scatter(x=data_ville['annee'], y=data_ville['Prix m2'], mode='lines', name=ville)
-        hover_text = [f'Ville: {ville}<br>Année: {annee}<br>Moyenne du prix au m2: {price:.2f}' for annee, price in zip(data_ville['annee'], data_ville['Prix m2'])]
-        trace6.hovertemplate = '%{text}'
-        trace6.text = hover_text
-        traces.append(trace6)
-
-    # Créer la figure et ajoutez les traces
-    fig6 = go.Figure(data=traces)
-
-    # Metter à jour la mise en page du graphique
-    fig6.update_layout(title='Évolution de la moyenne du prix au m2 par arrondissement de Paris', xaxis_title='Année', yaxis_title='Moyenne du prix au m2')
-
-    # Afficher le cinquième graphique dans Streamlit
-    st.plotly_chart(fig6, use_container_width=True)
+    # Use the components function to embed the HTML content
+    st.components.v1.html(open("Evolution_prix_m2_par_arrondissement_Paris_Plotly.html", 'r').read(), width=1000, height=600, scrolling=True)
+    
 
     introduction_text = """
 Ici on constate une tendance à la **hausse des prix moyens au m2** dans paris 
@@ -589,37 +299,9 @@ intramuros, cela s’explique notamment par le fait que le marché soit tendu, a
 
 
     # Générer le cinquième graphique "Evolution du nombre total de ventes par mois et par arrondissement"
-    # Ajoutez une nouvelle colonne 'month' pour extraire le mois à partir de la colonne 'date_transaction'
-    df_final_used['month'] = df_final_used['date_transaction'].dt.month
-
-    # Calculer le nombre total de ventes pour chaque mois et chaque arrondissement
-    total_sales_by_month_and_arrondissement = df_final_used.groupby(['ville', 'month']).size().reset_index(name='Total Ventes')
-
-    # Trier le DataFrame par la colonne 'month'
-    total_sales_by_month_and_arrondissement = total_sales_by_month_and_arrondissement.sort_values(by='month')
-
-    # Obtenir les noms des mois en français
-    month_names_fr = [month_name[i].capitalize() for i in range(1, 13)]
-
-    # Créer une liste de courbes pour chaque arrondissement
-    traces = []
-    for ville in total_sales_by_month_and_arrondissement['ville'].unique():
-        data_ville = total_sales_by_month_and_arrondissement[total_sales_by_month_and_arrondissement['ville'] == ville]
-        trace = go.Scatter(x=month_names_fr, y=data_ville['Total Ventes'], mode='lines', name=ville)
-        hover_text = [f'Ville: {ville}<br>Mois: {month}<br>Total Ventes: {sales}' for month, sales in zip(month_names_fr, data_ville['Total Ventes'])]
-        trace.hovertemplate = '%{text}'
-        trace.text = hover_text
-        traces.append(trace)
-
-    # Créer la figure et ajoutez les courbes pour chaque arrondissement
-    fig2 = go.Figure(data=traces)
-
-    # Mettre à jour la mise en page du graphique
-    fig2.update_layout(title='Évolution du nombre total de ventes par mois et par arrondissement de Paris', xaxis_title='Mois', yaxis_title='Nombre total de ventes')
-
-    # Afficher le cinquième graphique dans Streamlit
-    st.plotly_chart(fig2, use_container_width=True)
-
+    # Use the components function to embed the HTML content
+    st.components.v1.html(open("Evolution_ventes_par_arrondissement_par_mois_Paris_Plotly.html", 'r').read(), width=1000, height=600, scrolling=True)
+    
     introduction_text = """
 Ici, on retrouve clairement le même **effet de saisonnalité** par mois au sein de 
 l’année 2022 qu’au global avec les chutes au mois d’Aout et de Novembre.
@@ -628,10 +310,8 @@ l’année 2022 qu’au global avec les chutes au mois d’Aout et de Novembre.
     st.write(introduction_text)
 
     # Générer le sixième graphique "Evolution du prix au m2 par mois"
-    fig = generate_price_chart(df_final_used)
-
-    # Afficher le graphique dans Streamlit
-    st.plotly_chart(fig, use_container_width=True)
+    # Use the components function to embed the HTML content
+    st.components.v1.html(open("Evolution_prix_m2_par_arrondissement_par_mois_Paris_Plotly.html", 'r').read(), width=1000, height=600, scrolling=True)
 
     introduction_text = """
 Ici, on observe que la période de l’année a un impact sur le prix de vente, 
@@ -641,7 +321,12 @@ Il y a donc un impact du couple Offre/Demande sur le marché.
 """
     # Afficher le texte introductif
     st.write(introduction_text)
-    
+
+# Chemin vers le fichier CSV
+csv_file_path = "df_final_used.csv"
+
+# Charger le fichier CSV dans un DataFrame
+df_final_used = pd.read_csv(csv_file_path)
 
     #Map interactive 
 
@@ -653,8 +338,6 @@ def page_map(df_final_used):
     import branca.colormap as cm
     import matplotlib.cm as cm_plt
     import matplotlib.colors as colors
-
-
 
     st.title("Carte vision Paris")
     st.write("**Variations selon : Prix du bien - Prix au m2 - Taux de rendement**")
@@ -716,7 +399,7 @@ Cette carte dynamique vous permet notamment d'explorer les **fourchettes de prix
     
 
     # Trier le DataFrame par la colonne de votre choix (prix, Prix m2, Taux rendement i)
-    def update_map(variable_name='prix'):
+    def update_map(variable_name='Prix'):
         df_sorted = df_final_used.sort_values(variable_name, ascending=False)
 
         
@@ -747,12 +430,6 @@ Cette carte dynamique vous permet notamment d'explorer les **fourchettes de prix
 
 
 ##Conclusion
-
-# Chemin vers le fichier CSV
-csv_file_path = "df_final_used.csv"
-
-# Charger le fichier CSV dans un DataFrame
-df_final_used = pd.read_csv(csv_file_path)
 
 import streamlit as st
 import pandas as pd
