@@ -302,8 +302,6 @@ Au global sur la France entière, on observe là également un **effet de saison
 des ventes selon les mois. On identifie très clairement une **chute** sur les mois 
 d’**Aout** et de **Novembre**. Il convient de noter qu’ici la date de transaction 
 correspond à la signature de l’acte authentique chez le notaire.
-
-**Intéressons nous maintenant aux données propres à paris intramuros :**
 """
     # Afficher le texte introductif
     st.write(text)
@@ -314,7 +312,13 @@ correspond à la signature de l’acte authentique chez le notaire.
     st.write("")
     # Add an empty line to create space
     st.write("")
-    
+
+    text = """
+**Intéressons nous maintenant aux données propres à paris intramuros :**
+"""
+    # Afficher le texte introductif
+    st.write(text)
+
 
     # Générer le troisième graphique "Evolution du nombre total de ventes par arrondissement par année"
     # Use the components function to embed the HTML content
