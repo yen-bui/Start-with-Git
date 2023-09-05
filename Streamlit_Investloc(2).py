@@ -319,6 +319,12 @@ correspond à la signature de l’acte authentique chez le notaire.
     # Afficher le texte introductif
     st.write(text)
 
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
 
     # Générer le troisième graphique "Evolution du nombre total de ventes par arrondissement par année"
     # Use the components function to embed the HTML content
