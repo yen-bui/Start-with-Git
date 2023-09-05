@@ -672,12 +672,100 @@ Pour les graphiques, on tient compte des revenus locatifs mais aussi de la plus-
 """
     st.write(conclusion_text)
 
+# Fonction afficher la page "Bonus"
+def page_filtre():
+    import streamlit as st
+    st.title("Estimation de la rentabilité de votre projet")
+
+    introduction_text = """
+A présent, nous vous invitons à **réaliser une estimation de la rentabilité** de votre projet en fonction des critères de votre choix : emplacement du bien (arrondissement),
+prix, nombre de pièces, surface ou encore loyer mensuel du bien. Vous aurez également l'occasion de rechercher un bien en fonction du **taux de rendement souhaité**.
+"""
+    st.write(introduction_text)
+
+    import pandas as pd
+    import streamlit as st
+    from streamlit_folium import folium_static
+    import folium
+
+    data = pd.read_csv("df_streamlit.csv")
+
+    # Modifier la colonne "Taux de rendement" en effectuant le calcul demandé
+    data['Taux de rendement'] = ((data['Loyer mensuel'] * 12) / data['Prix']) * 100
+    
+    # Modifier la colonne "Taux de rendement" en effectuant le calcul et en arrondissant
+    data['Taux de rendement'] = round(((data['Loyer mensuel'] * 12) / data['Prix']) * 100, 2)
+
+    def filter_data(data, prix_range, code_postal, nb_pieces_range, surface_range, loyer_mensuel_range, taux_rendement_range):
+        filtered_data = data[
+            (data["Prix"].between(prix_range[0], prix_range[1])) &
+            (data["Code Postal"] == code_postal) &
+            (data["Nombre de pièces"].between(nb_pieces_range[0], nb_pieces_range[1])) &
+            (data["Surface"].between(surface_range[0], surface_range[1])) &
+            (data["Loyer mensuel"].between(loyer_mensuel_range[0], loyer_mensuel_range[1])) &
+            (data["Taux de rendement"].between(taux_rendement_range[0], taux_rendement_range[1]))
+        ]
+        return filtered_data
+
+    st.write("**Recherche de biens immobiliers**")
+
+    st.sidebar.title("Filtres de recherche")
+
+    prix_range = st.sidebar.slider("Prix (€)", float(data["Prix"].min()), float(data["Prix"].max()), (float(data["Prix"].min()), float(data["Prix"].max())))
+
+    code_postal = st.sidebar.selectbox("Code Postal", data["Code Postal"].unique())
+
+    nb_pieces_range = st.sidebar.slider("Nombre de pièces", int(data["Nombre de pièces"].min()), int(data["Nombre de pièces"].max()), (int(data["Nombre de pièces"].min()), int(data["Nombre de pièces"].max())))
+
+    surface_range = st.sidebar.slider("Surface (m²)", float(data["Surface"].min()), float(data["Surface"].max()), (float(data["Surface"].min()), float(data["Surface"].max())))
+
+    loyer_mensuel_range = st.sidebar.slider("Loyer mensuel (€)", float(data["Loyer mensuel"].min()), float(data["Loyer mensuel"].max()), (float(data["Loyer mensuel"].min()), float(data["Loyer mensuel"].max())))
+
+    taux_rendement_range = st.sidebar.slider("Taux de rendement (%)", float(data["Taux de rendement"].min()), float(data["Taux de rendement"].max()), (float(data["Taux de rendement"].min()), float(data["Taux de rendement"].max())))
+
+    filtered_data = filter_data(data, prix_range, code_postal, nb_pieces_range, surface_range, loyer_mensuel_range, taux_rendement_range)
+
+    st.write(f"Nombre de biens correspondants : {len(filtered_data)}")
+
+    m = folium.Map(location=[48.8566, 2.3522], zoom_start=12)
+
+    for index, row in filtered_data.iterrows():
+        popup_text = f"Bien immobilier {index + 1}**\n"
+        popup_text += f"Prix : {row['Prix']} €\n"
+        popup_text += f"Code Postal : {row['Code Postal']}\n"
+        popup_text += f"Nombre de pièces : {row['Nombre de pièces']}\n"
+        popup_text += f"Surface :** {row['Surface']} m²\n"
+        popup_text += f"Loyer mensuel : {row['Loyer mensuel']} €\n"
+        popup_text += f"Taux de rendement : {row['Taux de rendement']} %\n"
+        folium.Marker(
+            location=[row['Latitude'], row['Longitude']],
+            popup=folium.Popup(popup_text, max_width=300)
+        ).add_to(m)
+
+    folium_static(m)
+
+    if len(filtered_data) > 0:
+        import streamlit as st
+        st.subheader("Biens immobiliers filtrés :")
+        for index, row in filtered_data.iterrows():
+            st.write(f"Bien immobilier {index + 1}")
+            st.write(f"Prix : {row['Prix']} €")
+            st.write(f"Code Postal : {row['Code Postal']}")
+            st.write(f"Nombre de pièces : {row['Nombre de pièces']}")
+            st.write(f"Surface :** {row['Surface']} m²")
+            st.write(f"Loyer mensuel : {row['Loyer mensuel']} €")
+            st.write(f"Taux de rendement : {row['Taux de rendement']} %")
+            st.write("----")
+    else:
+        st.warning("Aucun bien ne correspond aux critères de recherche.")
+
+
 
 # Fonction principale de l'application
 # Create a layout with links to the two pages
 st.sidebar.title("Navigation")
 #page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus"]
-page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion"]
+page_links = ["Machine Learning", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus"]
 choice = st.sidebar.radio("Go to", page_links)
 
 
@@ -692,5 +780,5 @@ elif choice == "Carte vision Paris":
     page_map(df_final_used)
 elif choice == "Conclusion":
     page_conclusion()
-#elif choice == "Bonus":
-    #page_filtre()
+elif choice == "Bonus":
+    page_filtre()
