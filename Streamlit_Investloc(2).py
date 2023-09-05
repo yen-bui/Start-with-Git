@@ -294,7 +294,7 @@ ici la chute observée en 2020 est faussée, puisqu’il s’agit de l’année 
 
     # Générer le deuxième graphique "Evolution du nombre total de ventes par mois"
     # Use the components function to embed the HTML content
-    st.components.v1.html(open("Evolution_nombre_ventes_par_mois_2022_France_Plotly.html", 'r').read(), width=1000, height=600, scrolling=True)
+    st.components.v1.html(open("Evolution_nombre_ventes_par_mois_2022_France_Plotly.html", 'r').read(), width=800, height=500, scrolling=True)
 
 
     text = """
@@ -308,6 +308,13 @@ correspond à la signature de l’acte authentique chez le notaire.
     # Afficher le texte introductif
     st.write(text)
 
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    
 
     # Générer le troisième graphique "Evolution du nombre total de ventes par arrondissement par année"
     # Use the components function to embed the HTML content
