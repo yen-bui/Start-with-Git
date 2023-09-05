@@ -445,21 +445,21 @@ def page_conclusion():
     introduction_text = """
 ##En conclusion, il convient de retenir les éléments suivants :
 
-Au global, les prix de l’immobilier évoluent et suivent **une évolution que l’on 
+##Au global, les prix de l’immobilier évoluent et suivent **une évolution que l’on 
 pourrait même qualifier d’exponentielle**, alimentée à la fois par des effets réels 
 de l’économie réelle mais également par la spéculation sur les marchés.
 
-Si au sein d’une année (sur 12 mois), ou au sein d’un cycle court (3 annés), on 
+##Si au sein d’une année (sur 12 mois), ou au sein d’un cycle court (3 annés), on 
 observe des **variations sur l’offre et la demande** qui impactent les prix qui 
 peuvent être plus ou moins significatives selon les arrondissements de Paris, il 
 convient de noter que ces effets sont lissés sur une vision plus long terme.
 
-Un investisseur peut donc **maximiser la profitabilité** de on investissement en 
+##Un investisseur peut donc **maximiser la profitabilité** de on investissement en 
 choisissant la bonne année et la bonne période de l’année, mais ce tromper sur 
 ce couple de temporalité, n’aura pas réellement d’effet significatif à long terme 
 sur sa rentabilité.
 
-Enfin, le choix du **régime et de la modalité de financement auront également un 
+##Enfin, le choix du **régime et de la modalité de financement auront également un 
 fort impact sur la rentabilité** de l’investissement, car en considérant un régime 
 LMNP, un investissement locatif en 2022 était rentabilisé au bout de la 32ème 
 année si intégralement financé par emprunt sur 25 ans, contrairement au bout 
