@@ -665,5 +665,3 @@ elif choice == "Conclusion":
     page_conclusion()
 elif choice == "Bonus":
     page_filtre()
-
-
