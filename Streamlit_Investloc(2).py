@@ -318,7 +318,7 @@ correspond à la signature de l’acte authentique chez le notaire.
 
     # Générer le troisième graphique "Evolution du nombre total de ventes par arrondissement par année"
     # Use the components function to embed the HTML content
-    st.components.v1.html(open("Evolution_nombre_ventes_par_arrondissement_Paris_Plotly.html", 'r').read(), width=1000, height=600, scrolling=True)
+    st.components.v1.html(open("Evolution_nombre_ventes_par_arrondissement_Paris_Plotly.html", 'r').read(), width=800, height=500, scrolling=True)
    
 
     introduction_text = """
@@ -330,6 +330,13 @@ Il est intéressant de faire la même analyse sur les prix :
 """
     # Afficher le texte introductif
     st.write(introduction_text)
+
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
 
 
     # Générer le quatrième graphique "Evolution du prix au m2 moyen par arrondissement par année"
