@@ -777,7 +777,8 @@ vefa: 7.09778789337547e-05
 
 # Fonction principale de l'application
 # Create a layout with links to the two pages
-st.sidebar.title("Projet Investissement locatif")
+st.sidebar.title("Projet Data Analyst")
+st.sidebar.title("Investissement locatif")
 page_links = ["Contexte & Méthodologie", "Vision France","Vision Paris","Carte vision Paris","Conclusion","Bonus / Votre projet immobilier", "Bonus / Machine Learning"]
 choice = st.sidebar.radio("Menu", page_links)
 
