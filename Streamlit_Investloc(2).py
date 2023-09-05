@@ -405,6 +405,107 @@ csv_file_path = "df_final_used.csv"
 # Charger le fichier CSV dans un DataFrame
 df_final_used = pd.read_csv(csv_file_path)
 
+    #Map interactive 
+
+# Fonction pour la page "Carte vision Paris"
+def page_map(df_final_used):
+    import streamlit as st
+    import folium
+    import pandas as pd
+    import branca.colormap as cm
+    import matplotlib.cm as cm_plt
+    import matplotlib.colors as colors
+
+
+
+    st.title("Carte vision Paris")
+    st.write("**Variations selon : Prix du bien - Prix au m2 - Taux de rendement**")
+
+    introduction_text = """
+Pour enrichir davantage votre expérience, nous avons créé une **carte interactive**. Elle vous permettra de visualiser la variation des prix immobiliers selon la localisation des biens. 
+Cette carte dynamique vous permet notamment d'explorer les **fourchettes de prix, de taux de rendement et de prix au m² des biens**. Une manière visuelle et immersive d'appréhender le marché immobilier parisien.
+"""
+    st.write(introduction_text)
+
+
+    # Remplacer les noms des colonnes dans le DataFrame
+    df_final_used.rename(columns={'Prix m2': 'Prix au m2', 'Taux rendement i': 'Taux de rendement', 'prix': 'Prix'}, inplace=True)
+    
+        # Fonction pour arrondir les variables Prix m2 et Taux rendement i
+    def round_variables(row):
+        row['Prix au m2'] = round(row['Prix au m2'], 2)
+        row['Taux de rendement'] = round(row['Taux de rendement'], 2)
+        return row
+        # Arrondir les variables dans le DataFrame
+    df_final_used = df_final_used.apply(round_variables, axis=1)
+    
+    
+    
+    # Fonction pour créer une carte Folium interactive
+    def create_folium_map(df_sorted, variable_name, colormap_colors, colormap_caption):
+        # Créer une carte Folium centrée sur une position initiale
+        m = folium.Map(location=[48.8566, 2.3522], zoom_start=10)
+
+        # Obtenir la valeur maximale et minimale de la variable pour la mise à l'échelle des couleurs
+        max_value = df_sorted[variable_name].max()
+        min_value = df_sorted[variable_name].min()
+
+        # Créer une échelle de couleurs en fonction des couleurs fournies
+        colormap = cm.LinearColormap(colors=colormap_colors, index=[min_value, max_value], vmin=min_value, vmax=max_value)
+
+        # Parcourir le DataFrame et ajouter un cercle pour chaque parcelle
+        for index, row in df_sorted.iterrows():
+            # Récupérer la couleur correspondant à la variable de la parcelle
+            color = colormap(row[variable_name])
+            # Créer un cercle avec les coordonnées de latitude et longitude de la parcelle
+            circle = folium.CircleMarker(location=[row['latitude'], row['longitude']],
+                                         radius=5,
+                                         color=color,
+                                         fill=True,
+                                         fill_color=color)
+            # Ajouter les informations de prix et surface habitable à la fenêtre contextuelle du cercle
+            popup_text = '{} : {}'.format(variable_name, row[variable_name])
+            folium.Popup(popup_text).add_to(circle)
+            circle.add_to(m)
+
+        # Ajouter l'échelle de couleurs à la carte
+        colormap.caption = colormap_caption
+        colormap.add_to(m)
+
+        return m
+    
+
+    
+
+    # Trier le DataFrame par la colonne de votre choix (prix, Prix m2, Taux rendement i)
+    def update_map(variable_name='Prix'):
+        df_sorted = df_final_used.sort_values(variable_name, ascending=False)
+
+        
+
+        # Définir les couleurs et la légende de l'échelle de couleurs en fonction de la variable choisie
+        if variable_name == 'Prix':
+            colormap_colors = ['yellow', 'red']
+            colormap_caption = 'Prix'
+        elif variable_name == 'Prix au m2':
+            colormap_colors = ['yellow', 'red']
+            colormap_caption = 'Prix au m2'
+        elif variable_name == 'Taux de rendement':
+             colormap_colors = ['turquoise', 'magenta']
+             colormap_caption = 'Taux de rendement'
+
+        # Créer la carte interactive
+        interactive_map = create_folium_map(df_sorted, variable_name, colormap_colors, colormap_caption)
+
+        # Afficher la carte Folium dans Streamlit
+        st.markdown('## Carte interactive')
+        folium_static(interactive_map)
+
+
+    # Créer un widget interactif pour choisir la variable à afficher
+    variable_selector = st.selectbox("Sélectionnez une variable:", ['Prix', 'Prix au m2', 'Taux de rendement'])
+    update_map(variable_name=variable_selector)
+
 # Fonction principale de l'application
 # Create a layout with links to the two pages
 st.sidebar.title("Navigation")
@@ -420,8 +521,8 @@ elif choice == "Vision France":
     page_France()
 elif choice == "Vision Paris":
     page_Paris()
-#elif choice == "Carte vision Paris":
-    #page_map(df_final_used)
+elif choice == "Carte vision Paris":
+    page_map(df_final_used)
 #elif choice == "Conclusion":
     #page_conclusion()
 #elif choice == "Bonus":
