@@ -539,6 +539,13 @@ de la 25ème année si payé cash.
     # Afficher le texte introductif
     st.write(introduction_text)
 
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+
     st.write("**Paiement cash**")
 
     # Utilisation du style 'default'
@@ -574,6 +581,13 @@ de la 25ème année si payé cash.
 
     # Afficher les sous-figures
     st.pyplot(fig)
+
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
+    # Add an empty line to create space
+    st.write("")
 
     import streamlit as st
     st.write("**Paiement à crédit**")
