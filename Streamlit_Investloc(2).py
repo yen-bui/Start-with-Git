@@ -39,6 +39,21 @@ A la fin, il y a une partie bonus du possible prédictif sur le taux de rendemen
 
 Trois datasets (Transactions, Loyers et Foyers fiscaux) à l'origine ont été utilisées (Source : https://www.kaggle.com/datasets/benoitfavier/immobilier-france?select=loyers.csv). Bien que cela soit récupéré sur Kaggle, en réalité l’ensemble de ces données proviennent de sources institutionnelles (INSEE, DGFiP via publicité foncière, cadastre).
 
+**Problématiques à régler sur les datasets :**
+- Trouver la clé commune pour fusionner les datasets
+- Gérer les doublons créés par les fusions du fait de champs communs
+- Identifier les NaN et les gérer
+- Une quantité de données disponibles qui varie beaucoup selon les départements
+- Des valeurs qui varient beaucoup selon les départements en France
+- Choisir les champs pertinents et essentiels à notre étude
+- Enrichir le dataset afin de créer les champs nécessaires à notre étude
+- Gérer les valeurs extrêmes et aberrantes
+…
+
+**Démarche :**
+image_url = "https://drive.google.com/uc?id=1d8k-HvO1vWgLiujuGd-7oeJm3rBKFY_a"
+st.image(image_url, caption="Image1", use_column_width=True)
+
 """
 
     # Afficher le texte introductif
