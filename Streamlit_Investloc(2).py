@@ -27,11 +27,17 @@ def page_contexte():
     introduction_text = """
 **Objectif :**
 
-Permettre de **prédire** avec le moins d’informations possibles (loyer au m2, prix de vente, code postal, appartement neuf ou ancien, nombre de pièces, surface habitable) le **niveau de rentabilité potentiel** d’un investissement locatif.
+Ce projet a pour but d'analyser le marché immobilier en France afin d'aider un ménage sans connaisance particulière souhaitant investir dans de l'immobilier locatif.
 
-**Démarche :**
+**Comment y parvenir :**
 
-Toute l’analyse menée sur le dataset, le choix de la région, la gestion des NaNs, des valeurs aberrantes et extrêmes, l’enrichissement de ce dernier jusqu’au calcul du taux de rendement nous permettaient d’avoir un dataset préparé pour **envisager un modèle predictif de machine learning**.
+Pour ce projet, nous avons chosi l'analyse du marché immobilier principalement sur l'axe du storytelling et de la data visualisation dans une démarche de rétrospection. L’idée est de mieux comprendre ce qu’il s’est passé pour préparer de futures stratégies d'investissement (par exemple).
+
+A la fin, il y a une partie bonus du possible prédictif sur le taux de rendement locatif permettant d’orienter les décisions des ménages investisseurs dans leur projet d’investissement locatif. La contrainte était qu’il fallait que cela fonctionne avec un nombre limité de variables, les plus basiques que nous pouvons retrouver sur une annonce immobilière (Prix, surface, nombre de pièces et arrondissement).
+
+**Choix des datasets:**
+
+Trois datasets (Transactions, Loyers et Foyers fiscaux) à l'origine ont été utilisées (Source : https://www.kaggle.com/datasets/benoitfavier/immobilier-france?select=loyers.csv). Bien que cela soit récupéré sur Kaggle, en réalité l’ensemble de ces données proviennent de sources institutionnelles (INSEE, DGFiP via publicité foncière, cadastre).
 
 """
 
@@ -727,6 +733,10 @@ def page_ML():
     import streamlit as st
     st.title("Bonus / Machine Learning")
     introduction_text = """
+**Préambule :**
+
+A titre accessoire, nous avons voulu nous essayer à une prédiction sur une tranche de taux de rendement (tous les 0,5 points) permettant d’orienter les décisions des ménages investisseurs dans leur projet d’investissement locatif. La contrainte était qu’il fallait que cela fonctionne avec un nombre limité de variables, les plus basiques que nous pouvons retrouver sur une annonce immobilière (Prix, surface, nombre de pièces et arrondissement).
+
 **Objectif :**
 
 Permettre de **prédire** avec le moins d’informations possibles (loyer au m2, prix de vente, code postal, appartement neuf ou ancien, nombre de pièces, surface habitable) le **niveau de rentabilité potentiel** d’un investissement locatif.
