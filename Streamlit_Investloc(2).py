@@ -805,21 +805,21 @@ Toute l’analyse menée sur le dataset, le choix de la région, la gestion des 
 
 **Résultats :**
 
-Accuracy: 0.8916181311724487
+Accuracy: 0.892
 
-F1 Score: 0.8876209442211274 
+F1 Score: 0.888
 
-prix: 0.4769188103248616
+prix: 0.477
 
-surface_habitable: 0.4134632071728446
+surface_habitable: 0.413
 
-loyer_m2_appartement: 0.048852671327828646
+loyer_m2_appartement: 0.049
 
-code_postal: 0.041553367818537676
+code_postal: 0.042
 
-n_pieces: 0.019140965476993666
+n_pieces: 0.019
 
-vefa: 7.09778789337547e-05 
+vefa: 7.098e-05 
 
 """
 
