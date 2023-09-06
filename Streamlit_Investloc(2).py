@@ -39,6 +39,14 @@ A la fin, il y a une partie bonus du possible prédictif sur le taux de rendemen
 
 Trois datasets (Transactions, Loyers et Foyers fiscaux) à l'origine ont été utilisées (Source : https://www.kaggle.com/datasets/benoitfavier/immobilier-france?select=loyers.csv). Bien que cela soit récupéré sur Kaggle, en réalité l’ensemble de ces données proviennent de sources institutionnelles (INSEE, DGFiP via publicité foncière, cadastre).
 
+"""
+    # Afficher le texte introductif
+    st.write(introduction_text)
+
+    image_url = " https://i.ibb.co/t49cwd9/3-datasets-origine.png"
+    st.image(image_url, caption="Image1", use_column_width=True)
+
+    introduction_text = """       
 **Problématiques à régler sur les datasets :**
 - Trouver la clé commune pour fusionner les datasets
 - Gérer les doublons créés par les fusions du fait de champs communs
@@ -48,16 +56,35 @@ Trois datasets (Transactions, Loyers et Foyers fiscaux) à l'origine ont été u
 - Choisir les champs pertinents et essentiels à notre étude
 - Enrichir le dataset afin de créer les champs nécessaires à notre étude
 - Gérer les valeurs extrêmes et aberrantes
-…
+- etc...
 
 **Démarche :**
-
+- Création d’une clé unique concaténée de l’ID du département et de l’ID de la ville qui sera la clef pour fusionner les datasets
+- Identification et suppression des valeurs aberrantes et d’une partie des valeurs extrêmes
+- Création de plusieurs colonnes issues de colonnes déjà existantes (par exemple l’année sur la base de la date de transaction, etc…)
+- Création de plusieurs colonnes issues de données mathématiques:
 """
 
     # Afficher le texte introductif
     st.write(introduction_text)
 
-    image_url = "https://i.ibb.co/qBzpYsv/Capture-d-cran-2023-09-01-112827.png"
+    image_url = "https://i.ibb.co/jLLR4c2/Nouvelles-colonnes-cr-es.png"
+    st.image(image_url, caption="Image1", use_column_width=True)
+
+    introduction_text = """
+- Choix de focaliser l’étude sur Paris Intramuros : 
+    - Les loyers et les prix de Paris Intramuros diffèrent trop du reste de la France pour envisager une étude globale (à la fois sur la visualisation et le prédictif)
+    - Le département 75 fait partie des départements qui ont la plus grande quantité de données disponibles
+    - Les transactions concernent presque exclusivement des appartements, donc suppression des lignes relatives aux maisons
+
+**Dataset final :**
+- Un dataset principal qui a été « clôné », puis allegé  en 2 autres différents pour les besoins de certains graphiques et du machine learning 
+"""
+
+    # Afficher le texte introductif
+    st.write(introduction_text)
+
+    image_url = "https://i.ibb.co/cyZQkg8/Datasets-finaux.png"
     st.image(image_url, caption="Image1", use_column_width=True)
 
 # Fonction pour afficher la page "Vision France"
