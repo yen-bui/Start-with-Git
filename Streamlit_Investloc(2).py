@@ -57,7 +57,7 @@ Trois datasets (Transactions, Loyers et Foyers fiscaux) à l'origine ont été u
     # Afficher le texte introductif
     st.write(introduction_text)
 
-image_url = "https://drive.google.com/uc?id=1d8k-HvO1vWgLiujuGd-7oeJm3rBKFY_a"
+image_url = "https://drive.google.com/uc?id=1d8k-HvO1vWgLiujuGd-7oeJm3rBKFY_a&export=download&confirm=t&uuid=ad023b80-232f-47e5-bfa0-eba2d86e2ba8&at=AB6BwCCv7Ta8KGVrTfR7IMEEUv-T:1693814743296"
 st.image(image_url, caption="Image1", use_column_width=True)
 
 # Fonction pour afficher la page "Vision France"
